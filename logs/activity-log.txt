@@ -1,0 +1,3 @@
+﻿[2025-07-28] Initial commit: Datagram testnet repo setup
+[2025-07-28] Added sample task script for activity tracking
+[2025-07-28] Updated datagram.yaml for eligibility
