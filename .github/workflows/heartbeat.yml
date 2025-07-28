@@ -1,0 +1,26 @@
+name: Heartbeat Auto Commit
+on:
+  schedule:
+    - cron: '0 */6 * * *'   # Runs every 6 hours
+  workflow_dispatch:         # Manual trigger if needed
+
+jobs:
+  heartbeat:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Update heartbeat log
+        run: |
+          echo "$(date) - Heartbeat active" >> heartbeat.log
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "nosense00"
+          git config --global user.email "youremail@example.com"
+          git add heartbeat.log
+          git commit -m "heartbeat $(date +'%s')" || echo "No changes to commit"
+
+      - name: Push changes
+        run: git push origin main
