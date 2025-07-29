@@ -1,0 +1,26 @@
+name: Datagram Pulse
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"   # Every 6 hours
+  workflow_dispatch:
+
+jobs:
+  pulse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Update pulse log
+        run: |
+          mkdir -p logs
+          echo "[`date`] Pulse ping - $(shuf -n 1 -e 'Node alive' 'Auto-sync' 'Keep alive' 'Random activity boost')" >> logs/activity-log.txt
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "nosense00"
+          git config --global user.email "bisdakxxx@gmail.com"
+          git add logs/activity-log.txt
+          git commit -m "chore(pulse): Auto activity ping [skip ci]" || echo "No changes"
+          git push origin main
