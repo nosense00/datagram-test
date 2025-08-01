@@ -17,18 +17,21 @@ jobs:
 
       - name: Set Git Config
         run: |
+    mkdir -p logs
           git config --global user.name "nosense00-bot"
           git config --global user.email "bot@users.noreply.github.com"
 
       - name: Create random update
         run: |
+    mkdir -p logs
           echo "$(date) - Heartbeat ping" >> logs/activity-log.txt
           echo $RANDOM >> logs/activity-log.txt
 
       - name: Commit changes
         run: |
+    mkdir -p logs
           git add .
-          git commit -m "chore: heartbeat auto-ping $(date +'%Y-%m-%d %H:%M:%S')" || true
+          git commit -m "chore: heartbeat auto-ping $(date +'%Y-%m-%d %H:%M:%S')" || true || echo "No changes, skipping commit"
 
       - name: Push changes
         run: git push origin main
