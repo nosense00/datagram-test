@@ -1,0 +1,45 @@
+name: Activity Commit
+
+on:
+  schedule:
+    - cron: "15 */8 * * *" # Every 8 hours at :15
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  commit-activity:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "nosense00"
+          git config --global user.email "bisdakxxx@gmail.com"
+
+      - name: Random Delay (to avoid pattern)
+        run: |
+          DELAY=$((RANDOM % 600)) # 0–10 min
+          echo "Sleeping for $DELAY seconds..."
+          sleep $DELAY
+
+      - name: Random File Update
+        run: |
+          FILES=("logs/activity-log.txt" "docs/dev-notes.md" "README.md")
+          FILE=${FILES[$RANDOM % ${#FILES[@]}]}
+          mkdir -p $(dirname $FILE)
+          echo "$(date) - update check" >> $FILE
+          echo "FILE=$FILE" >> $GITHUB_ENV
+
+      - name: Commit Changes
+        run: |
+          MSGS=("update ${FILE}" "minor tweak ${FILE}" "adjust ${FILE}" "temp save ${FILE}" "doc change" "sync update")
+          COMMIT_MSG=${MSGS[$RANDOM % ${#MSGS[@]}]}
+          git add .
+          git commit -m "$COMMIT_MSG" || git commit --allow-empty -m "$COMMIT_MSG"
+
+      - name: Push Changes
+        run: git push origin main
