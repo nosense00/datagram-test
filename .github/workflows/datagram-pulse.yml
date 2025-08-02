@@ -14,15 +14,15 @@ jobs:
         
       - name: Update pulse log
         run: |
-    mkdir -p logs
           mkdir -p logs
           echo "[`date`] Pulse ping - $(shuf -n 1 -e 'Node alive' 'Auto-sync' 'Keep alive' 'Random activity boost')" >> logs/activity-log.txt
 
       - name: Commit changes
         run: |
-    mkdir -p logs
           git config --global user.name "nosense00"
           git config --global user.email "bisdakxxx@gmail.com"
           git add logs/activity-log.txt
-          git commit -m "chore(pulse): Auto activity ping [skip ci]" || echo "No changes" || echo "No changes" || echo "No changes, skipping commit"
-          git push origin main
+          git commit -m "chore(pulse): Auto activity ping [skip ci]" || echo "No changes, skipping commit"
+
+      - name: Push changes
+        run: git push origin main
