@@ -1,39 +1,35 @@
-name: Heartbeat Auto Commit
+name: Heartbeat Commit
 
 on:
   schedule:
-    - cron: "0 */6 * * *"  # Every 6 hours
+    - cron: "0 */6 * * *"
   workflow_dispatch:
 
 permissions:
-  contents: write  # ✅ Para may commit rights
+  contents: write
 
 jobs:
-  heartbeat:
+  heartbeat_commit:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Random Delay (0–120s)
+        run: sleep $((RANDOM % 120))
 
-      - name: Set Git Config
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Set Git User
         run: |
-    mkdir -p logs
           git config --global user.name "nosense00-bot"
           git config --global user.email "bot@users.noreply.github.com"
 
-      - name: Create random update
+      - name: Heartbeat Commit
         run: |
-    mkdir -p logs
-          echo "$(date) - Heartbeat ping" >> logs/activity-log.txt
-          echo $RANDOM >> logs/activity-log.txt
+          mkdir -p logs
+          echo "$(date) - heartbeat ping" >> logs/heartbeat.log
+          git add logs/heartbeat.log
+          git commit -m "ci: heartbeat ping [skip ci]" || echo "No changes to commit"
 
-      - name: Commit changes
-        run: |
-    mkdir -p logs
-          git add .
-          git commit -m "chore: heartbeat auto-ping $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes" || true || echo "No changes, skipping commit"
-
-      - name: Push changes
+      - name: Push Commit
         run: git push origin main
-
 
