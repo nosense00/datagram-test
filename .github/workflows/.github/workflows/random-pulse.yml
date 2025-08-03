@@ -2,7 +2,7 @@ name: Random Pulse Commit
 
 on:
   schedule:
-    - cron: "0 10 * * *"
+    - cron: "0 10 * * *"  # 10 AM UTC
   workflow_dispatch:
 
 permissions:
@@ -31,4 +31,5 @@ jobs:
 
       - name: Push Commit
         run: git push origin main
+
 
