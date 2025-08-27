@@ -1,0 +1,17 @@
+name: Run with Datagram
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Run script with Datagram
+        run: |
+          echo "DATAGRAM_API_KEY=${{ secrets.DATAGRAM_API_KEY }}" >> $GITHUB_ENV
+          node index.js
