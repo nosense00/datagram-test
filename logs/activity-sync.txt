@@ -33,3 +33,4 @@ Wed Aug 27 11:12:05 UTC 2025 - fix: summon update
 Wed Aug 27 11:12:18 UTC 2025 - fix: summon update
 Wed Aug 27 11:12:52 UTC 2025 - update: soul bond
 Thu Aug 28 10:14:07 UTC 2025 - data: summon sync
+Fri Aug 29 10:13:51 UTC 2025 - refactor: evolution logs
