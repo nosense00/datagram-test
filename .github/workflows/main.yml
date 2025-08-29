@@ -1,17 +1,26 @@
-name: Run with Datagram
+name: Datagram Test
 
-on: [push]
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Setup Node
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
-      - name: Run script with Datagram
-        run: |
-          echo "DATAGRAM_API_KEY=${{ secrets.DATAGRAM_API_KEY }}" >> $GITHUB_ENV
-          node index.js
+          node-version: "18"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Datagram Script
+        env:
+          DATAGRAM_API_KEY: ${{ secrets.DATAGRAM_API_KEY }}
+        run: npm start
