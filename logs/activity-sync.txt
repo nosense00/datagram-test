@@ -305,3 +305,4 @@ Sun May 24 11:10:02 UTC 2026 - data: summon sync
 Mon May 25 12:56:30 UTC 2026 - data: summon sync
 Wed May 27 12:48:07 UTC 2026 - fix: summon update
 Thu May 28 13:41:54 UTC 2026 - refactor: evolution logs
+Fri May 29 12:43:31 UTC 2026 - update: soul bond
